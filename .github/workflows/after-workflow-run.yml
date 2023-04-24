@@ -1,6 +1,6 @@
 on:
   workflow_run:
-    workflows: [test_schedule]
+    workflows: [Explore-GitHub-Actions]
     types: [completed]
 
 jobs:
