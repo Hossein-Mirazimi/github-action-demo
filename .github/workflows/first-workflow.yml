@@ -1,0 +1,11 @@
+name: First Workflow To Greeting
+on: workflow_dispatch
+jobs:
+  first-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Greating
+        run: echo "start Greeting"
+        
+      - name: End Greeting
+        run: echo "end of greeting step"
