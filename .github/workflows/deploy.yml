@@ -32,8 +32,13 @@ jobs:
           node-version: 18
       - name: Install Pnpm
         run: npm i -g pnpm
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json')}}
       - name: Install Dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Run Test
         # run: |
         #   echo "testing"
@@ -50,8 +55,13 @@ jobs:
           node-version: 18
       - name: Install Pnpm
         run: npm i -g pnpm
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json')}}
       - name: Install Dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Check Lint
         # run: |
         #   echo "linting"
@@ -73,8 +83,13 @@ jobs:
           node-version: 18
       - name: Install Pnpm
         run: npm i -g pnpm
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json')}}
       - name: Install Dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Build Project
         run: pnpm run build
       - name: Publish script file
