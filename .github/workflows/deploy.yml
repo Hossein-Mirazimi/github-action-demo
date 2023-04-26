@@ -38,7 +38,7 @@ jobs:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/pnpm-lock.json')}}
       - name: Install Dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm i
       - name: Run Test
         # run: |
         #   echo "testing"
@@ -61,7 +61,7 @@ jobs:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/pnpm-lock.json')}}
       - name: Install Dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm i
       - name: Check Lint
         # run: |
         #   echo "linting"
@@ -89,7 +89,7 @@ jobs:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/pnpm-lock.json')}}
       - name: Install Dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm i
       - name: Build Project
         run: pnpm run build
       - name: Publish script file
