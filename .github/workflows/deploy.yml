@@ -33,7 +33,7 @@ jobs:
       - name: Install Pnpm
         run: npm i -g pnpm
       - name: Install Dependencies
-        run: pnpm i
+        run: pnpm install --no-frozen-lockfile
       - name: Run Test
         # run: |
         #   echo "testing"
@@ -51,7 +51,7 @@ jobs:
       - name: Install Pnpm
         run: npm i -g pnpm
       - name: Install Dependencies
-        run: pnpm i
+        run: pnpm install --no-frozen-lockfile
       - name: Check Lint
         # run: |
         #   echo "linting"
@@ -72,7 +72,7 @@ jobs:
       - name: Install Pnpm
         run: npm i -g pnpm
       - name: Install Dependencies
-        run: onpm i
+        run: pnpm install --no-frozen-lockfile
       - name: Build Project
         run: pnpm run build
       - name: upload Artifacts
