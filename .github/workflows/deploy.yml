@@ -31,7 +31,12 @@ jobs:
         with:
           node-version: 18
       - name: Install Pnpm
-        run: npm i -g pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
       - name: Cache Dependencies
         uses: actions/cache@v3
         with:
@@ -55,6 +60,11 @@ jobs:
           node-version: 18
       - name: Install Pnpm
         uses: pnpm/action-setup@v2
+        with:
+          version: 7
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
       - name: Cache Dependencies
         uses: actions/cache@v3
         with:
@@ -83,6 +93,11 @@ jobs:
           node-version: 18
       - name: Install Pnpm
         uses: pnpm/action-setup@v2
+        with:
+          version: 7
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
       - name: Cache Dependencies
         uses: actions/cache@v3
         with:
