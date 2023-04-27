@@ -46,6 +46,8 @@ jobs:
         run: pnpm i
       - name: Run Test
         run: pnpm test
+      - name: Run Test Coverage
+        run: pnpm test:coverage
       - name: Code Coverage Summary Report
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:
