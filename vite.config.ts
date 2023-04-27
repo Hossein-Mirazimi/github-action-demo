@@ -152,7 +152,7 @@ export default defineConfig({
       json: './coverage/final.json',
       junit: './coverage/junit.xml',
     },
-    reporters: ['verbose', 'junit', 'json', 'json-summary'],
+    reporters: ['verbose', 'junit', 'json'],
     coverage: {
       provider: 'istanbul',
     },
