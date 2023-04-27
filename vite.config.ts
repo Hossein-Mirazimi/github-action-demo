@@ -14,6 +14,7 @@ import Inspect from 'vite-plugin-inspect'
 import LinkAttributes from 'markdown-it-link-attributes'
 import Unocss from 'unocss/vite'
 import Shiki from 'markdown-it-shiki'
+import istanbul from 'vite-plugin-istanbul'
 
 export default defineConfig({
   resolve: {
@@ -131,6 +132,13 @@ export default defineConfig({
     // https://github.com/antfu/vite-plugin-inspect
     // Visit http://localhost:3333/__inspect/ to see the inspector
     Inspect(),
+
+    istanbul({
+      include: ['src/*'],
+      exclude: ['node_modules', 'test/'],
+      extension: ['.js', '.ts', '.vue', '.tsx'],
+      requireEnv: true,
+    }),
   ],
 
   // https://github.com/vitest-dev/vitest
@@ -139,6 +147,14 @@ export default defineConfig({
     environment: 'jsdom',
     deps: {
       inline: ['@vue', '@vueuse', 'vue-demi'],
+    },
+    outputFile: {
+      json: './coverage/final.json',
+      junit: './coverage/junit.xml',
+    },
+    reporters: ['verbose', 'junit', 'json'],
+    coverage: {
+      provider: 'istanbul',
     },
   },
 
