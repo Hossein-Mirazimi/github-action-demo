@@ -45,9 +45,6 @@ jobs:
       - name: Install Dependencies
         run: pnpm i
       - name: Run Test
-        # run: |
-        #   echo "testing"
-        #   echo "test passed"
         run: pnpm test
   lint:
     runs-on: ubuntu-latest
@@ -73,9 +70,6 @@ jobs:
       - name: Install Dependencies
         run: pnpm i
       - name: Check Lint
-        # run: |
-        #   echo "linting"
-        #   echo "lint passed"
         run: pnpm run lint
   build:
     needs:
@@ -113,22 +107,20 @@ jobs:
       - name: upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: dist-file
-          path: |
-            dist
-            package.json
+          name: dist-folder
+          path: dist
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Get Code
+      - name: Output Script file name
+        run: echo "${{ needs.build.outputs.script-file }}"
+      - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: dist-file
+          name: dist-folder
       - name: Show Files
         run: ls
-      - name: Output files
-        run: echo "${{ needs.build.outputs.script-file }}"
       - name: Deploy on Server
         run: |
           echo "deploying ...."
