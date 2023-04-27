@@ -57,7 +57,11 @@ jobs:
       - name: Code Coverage Summary Report
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:
-          filename: coverage/junit.xml
+          filename: coverage/**/.xml
+          badge: true
+          indicators: true
+          output: both
+          thresholds: '60 80'
   lint:
     runs-on: ubuntu-latest
     steps:
