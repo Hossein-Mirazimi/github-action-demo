@@ -54,14 +54,20 @@ jobs:
           ls ./coverage
           pwd
           cat ./coverage/junit.xml
-      - name: Code Coverage Summary Report
-        uses: irongut/CodeCoverageSummary@v1.3.0
+      - name: Check Coverage Report
+        uses: inzephirum/gha-test-coverage-check
         with:
-          filename: coverage/**/.xml
-          badge: true
-          indicators: true
-          output: both
-          thresholds: '60 80'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          min_threshold: '100'
+          report_file_path: './coverage/junit.xml'
+      # - name: Code Coverage Summary Report
+      #   uses: irongut/CodeCoverageSummary@v1.3.0
+      #   with:
+      #     filename: coverage/**/.xml
+      #     badge: true
+      #     indicators: true
+      #     output: both
+      #     thresholds: '60 80'
   lint:
     runs-on: ubuntu-latest
     steps:
