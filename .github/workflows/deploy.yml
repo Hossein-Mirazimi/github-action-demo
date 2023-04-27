@@ -40,7 +40,9 @@ jobs:
       - name: Cache Dependencies
         uses: actions/cache@v3
         with:
-          path: ~/.npm
+          path: |
+            ~/.npm
+            ~/.pnpm-store
           key: deps-node-modules-${{ hashFiles('**/pnpm-lock.yaml')}}
       - name: Install Dependencies
         run: pnpm i
@@ -49,7 +51,7 @@ jobs:
       - name: Run Test Coverage
         run: |
           pnpm test:coverage
-          ls
+          ls ./coverage
       - name: Code Coverage Summary Report
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:
