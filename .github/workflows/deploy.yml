@@ -42,13 +42,12 @@ jobs:
           path: node_modules
           key: deps-node-modules-${{ hashFiles('**/pnpm-lock.yaml')}}
       - name: Install Pnpm
-        if: steps.catch-dependencies.outputs.cache-hit != 'true'
         uses: pnpm/action-setup@v2
         with:
           version: 7
-          run_install: |
-            - recursive: true
-              args: [--frozen-lockfile, --strict-peer-dependencies]
+      - name: Install dependencies
+        if: steps.catch-dependencies.outputs.cache-hit != 'true'
+        run: pnpm i --frozen-lockfile
       - name: Run Test
         id: run-tests
         run: pnpm test
@@ -74,13 +73,12 @@ jobs:
           path: node_modules
           key: deps-node-modules-${{ hashFiles('**/pnpm-lock.yaml')}}
       - name: Install Pnpm
-        if: steps.catch-dependencies.outputs.cache-hit != 'true'
         uses: pnpm/action-setup@v2
         with:
           version: 7
-          run_install: |
-            - recursive: true
-              args: [--frozen-lockfile, --strict-peer-dependencies]
+      - name: Install dependencies
+        if: steps.catch-dependencies.outputs.cache-hit != 'true'
+        run: pnpm i --frozen-lockfile
       - name: Check Lint
         run: pnpm run lint
   build:
@@ -103,13 +101,12 @@ jobs:
           path: node_modules
           key: deps-node-modules-${{ hashFiles('**/pnpm-lock.yaml')}}
       - name: Install Pnpm
-        if: steps.catch-dependencies.outputs.cache-hit != 'true'
         uses: pnpm/action-setup@v2
         with:
           version: 7
-          run_install: |
-            - recursive: true
-              args: [--frozen-lockfile, --strict-peer-dependencies]
+      - name: Install dependencies
+        if: steps.catch-dependencies.outputs.cache-hit != 'true'
+        run: pnpm i --frozen-lockfile
       - name: Build Project
         run: pnpm run build
       - name: Publish script file
