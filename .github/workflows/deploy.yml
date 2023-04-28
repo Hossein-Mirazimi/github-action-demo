@@ -36,13 +36,13 @@ jobs:
         with:
           node-version: 18
       - name: Cache Dependencies
+        id: catch-dependencies
         uses: actions/cache@v3
         with:
-          path: |
-            ~/.npm
-            ~/.pnpm-store
+          path: node_modules
           key: deps-node-modules-${{ hashFiles('**/pnpm-lock.yaml')}}
       - name: Install Pnpm
+        if: steps.catch-dependencies.outputs.cache-hit != 'true'
         uses: pnpm/action-setup@v2
         with:
           version: 7
@@ -68,11 +68,13 @@ jobs:
         with:
           node-version: 18
       - name: Cache Dependencies
+        id: catch-dependencies
         uses: actions/cache@v3
         with:
-          path: ~/.npm
+          path: node_modules
           key: deps-node-modules-${{ hashFiles('**/pnpm-lock.yaml')}}
       - name: Install Pnpm
+        if: steps.catch-dependencies.outputs.cache-hit != 'true'
         uses: pnpm/action-setup@v2
         with:
           version: 7
@@ -95,11 +97,13 @@ jobs:
         with:
           node-version: 18
       - name: Cache Dependencies
+        id: catch-dependencies
         uses: actions/cache@v3
         with:
-          path: ~/.npm
+          path: node_modules
           key: deps-node-modules-${{ hashFiles('**/pnpm-lock.yaml')}}
       - name: Install Pnpm
+        if: steps.catch-dependencies.outputs.cache-hit != 'true'
         uses: pnpm/action-setup@v2
         with:
           version: 7
