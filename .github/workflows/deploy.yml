@@ -133,3 +133,11 @@ jobs:
         run: |
           echo "deploying ...."
           echo "Deployed"
+  report:
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report Output
+        run: |
+          echo "${{ github }}"
+          echo "reports"
