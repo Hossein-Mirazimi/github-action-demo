@@ -9,11 +9,11 @@ jobs:
         os: [ubuntu-latest, windows-latest]
         node: [12, 14, 16]
         include:
-          - node: 18
-            os: ubuntu-latest
+          - os: ubuntu-latest
+            node: 18
         exclude:
-          - node: 12
-            os: windows-latest
+          - os: windows-latest
+            node: 12
     runs-on: ${{ matrix.os }}
     steps:
       - name: Get Code
