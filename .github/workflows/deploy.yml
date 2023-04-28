@@ -84,7 +84,6 @@ jobs:
   build:
     needs:
       - test
-      - lint
     runs-on: ubuntu-latest
     outputs:
       script-file: ${{ steps.publishStep.outputs.script-file }}
