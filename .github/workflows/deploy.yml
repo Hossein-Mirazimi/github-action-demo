@@ -52,8 +52,10 @@ jobs:
       - name: Run Test
         run: pnpm test
       - name: Run Test Coverage
+        id: run-tests
         run: pnpm test:coverage
       - name: Upload Test Coverage
+        if: steps.run-tests.outcome == 'failure'
         uses: actions/upload-artifact@v3
         with:
           name: test-coverage
