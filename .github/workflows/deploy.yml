@@ -50,10 +50,8 @@ jobs:
             - recursive: true
               args: [--frozen-lockfile, --strict-peer-dependencies]
       - name: Run Test
-        run: pnpm test
-      - name: Run Test Coverage
         id: run-tests
-        run: pnpm test:coverage
+        run: pnpm test
       - name: Upload Test Coverage
         if: failure() && steps.run-tests.outcome == 'failure'
         uses: actions/upload-artifact@v3
