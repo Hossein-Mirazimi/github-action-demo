@@ -7,7 +7,13 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        node: [14, 16, 18]
+        node: [12, 14, 16]
+        include:
+          - node: 18
+            os: ubuntu-latest
+        exclude:
+          - node: 12
+            os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
       - name: Get Code
