@@ -35,13 +35,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-      - name: Install Pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 7
-          run_install: |
-            - recursive: true
-              args: [--frozen-lockfile, --strict-peer-dependencies]
       - name: Cache Dependencies
         uses: actions/cache@v3
         with:
@@ -49,6 +42,13 @@ jobs:
             ~/.npm
             ~/.pnpm-store
           key: deps-node-modules-${{ hashFiles('**/pnpm-lock.yaml')}}
+      - name: Install Pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
       - name: Run Test
         run: pnpm test
       - name: Run Test Coverage
@@ -69,6 +69,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/pnpm-lock.yaml')}}
       - name: Install Pnpm
         uses: pnpm/action-setup@v2
         with:
@@ -76,11 +81,6 @@ jobs:
           run_install: |
             - recursive: true
               args: [--frozen-lockfile, --strict-peer-dependencies]
-      - name: Cache Dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: deps-node-modules-${{ hashFiles('**/pnpm-lock.yaml')}}
       - name: Check Lint
         run: pnpm run lint
   build:
@@ -97,6 +97,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/pnpm-lock.yaml')}}
       - name: Install Pnpm
         uses: pnpm/action-setup@v2
         with:
@@ -104,11 +109,6 @@ jobs:
           run_install: |
             - recursive: true
               args: [--frozen-lockfile, --strict-peer-dependencies]
-      - name: Cache Dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: deps-node-modules-${{ hashFiles('**/pnpm-lock.yaml')}}
       - name: Build Project
         run: pnpm run build
       - name: Publish script file
