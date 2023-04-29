@@ -1,0 +1,118 @@
+name: Deploy Website
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - 'dev-*'   # dev-new dev-k8s-stg dev-stg
+      - 'feat/**' # feat/new feat/new/button
+    # paths-ignore:
+    #   - '.github/workflows/*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v3
+      - name: Install Nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Cache Dependencies
+        id: catch-dependencies
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: deps-node-modules-${{ hashFiles('**/pnpm-lock.yaml')}}
+      - name: Install Pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
+      - name: Install dependencies
+        if: steps.catch-dependencies.outputs.cache-hit != 'true'
+        run: pnpm i --frozen-lockfile
+      - name: Run Test
+        id: run-tests
+        run: pnpm test
+      - name: Upload Test Coverage
+        if: failure() && steps.run-tests.outcome == 'failure'
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-coverage
+          path: ./coverage/final.json
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v3
+      - name: Install Nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Cache Dependencies
+        id: catch-dependencies
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: deps-node-modules-${{ hashFiles('**/pnpm-lock.yaml')}}
+      - name: Install Pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
+      - name: Install dependencies
+        if: steps.catch-dependencies.outputs.cache-hit != 'true'
+        run: pnpm i --frozen-lockfile
+      - name: Check Lint
+        run: pnpm run lint
+  build:
+    needs:
+      - test
+    runs-on: ubuntu-latest
+    outputs:
+      script-file: ${{ steps.publishStep.outputs.script-file }}
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v3
+      - name: Install Nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Cache Dependencies
+        id: catch-dependencies
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: deps-node-modules-${{ hashFiles('**/pnpm-lock.yaml')}}
+      - name: Install Pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
+      - name: Install dependencies
+        if: steps.catch-dependencies.outputs.cache-hit != 'true'
+        run: pnpm i --frozen-lockfile
+      - name: Build Project
+        run: pnpm run build
+      - name: Publish script file
+        id: publishStep
+        run: find dist/assets/*.js -type f -execdir echo '::set-outputs name=script-file::{}' ';'
+      - name: upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-folder
+          path: dist
+  deploy:
+    needs: build
+    uses: ./.github/workflows/reusable-workflow.yml
+  report:
+    needs:
+      - lint
+      - deploy
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report Output
+        run: |
+          echo "${{ github }}"
+          echo "reports"

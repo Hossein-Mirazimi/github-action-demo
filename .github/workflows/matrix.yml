@@ -1,6 +1,6 @@
 name: Matrix Workflow
 on:
-  push:
+  workflow_dispatch:
 
 jobs:
   build:
