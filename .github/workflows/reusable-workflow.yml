@@ -7,10 +7,19 @@ on:
         required: false
         default: dist
         type: string
+    outputs:
+      result:
+        description: The result of this job output
+        value: ${{ jobs.deploy-reuse.outputs.outcome }}
+    # secrets:
+    #   some-secret:
+    #     required: false
 
 
 jobs:
   deploy-reuse:
+    outputs:
+      outcome: ${{ steps.set-result.outputs.step-result }}
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
@@ -19,6 +28,9 @@ jobs:
           name: ${{ inputs.artifact-name }}
       - name: Deploy reuseable job
         run: echo "Deploying and Uploading on server ..."
+      - name: set output
+        id: set-result
+        run: echo "::set-output name=step-result::success"
       - name: Output
         run: ls
 
