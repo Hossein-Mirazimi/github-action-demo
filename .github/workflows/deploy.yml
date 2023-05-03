@@ -136,6 +136,7 @@ jobs:
         uses: actions/deploy-pages@v2
         with:
           artifact_name: dist
+          preview: true
   # deploy:
   #   needs: build
   #   runs-on: ubuntu-latest
