@@ -120,7 +120,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          name: dist
           # Upload entire repository
           path: ./dist
   deploy:
@@ -142,7 +141,6 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v2
         with:
-          artifact_name: dist
           preview: true
   # deploy:
   #   needs: build
