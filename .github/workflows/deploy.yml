@@ -20,6 +20,10 @@ on:
       - 'dev-*'   # dev-new dev-k8s-stg dev-stg
       - 'feat/**' # feat/new feat/new/button
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 jobs:
   test:
     runs-on: ubuntu-latest
