@@ -18,6 +18,7 @@ import istanbul from 'vite-plugin-istanbul'
 
 export default defineConfig({
   publicDir: '/github-action-demo/',
+  base: '/github-action-demo/',
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
