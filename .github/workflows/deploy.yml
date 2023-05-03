@@ -130,9 +130,17 @@ jobs:
       - name: Show Files
         run: ls
       - name: Deploy on Server
-        run: |
-          echo "deploying ...."
-          echo "Deployed"
+        id: deploy-page
+        uses: actions/deploy-pages@v2
+        with:
+          artifact_name: dist-folder
+          preview: true
+          token: "${{github.token}}"
+      - name: Show Url
+        run: echo "Website Deployed on ${{steps.deploy-page.outputs.page_url}}"
+        # run: |
+        #   echo "deploying ...."
+        #   echo "Deployed"
   report:
     needs:
       - lint
