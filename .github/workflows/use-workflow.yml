@@ -9,6 +9,11 @@ on:
   #     - 'feat/**' # feat/new feat/new/button
     # paths-ignore:
     #   - '.github/workflows/*'
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 
 jobs:
   test:

@@ -117,27 +117,46 @@ jobs:
         with:
           name: dist-folder
           path: dist
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          name: dist
+          # Upload entire repository
+          path: 'dist'
   deploy:
-    needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Output Script file name
-        run: echo "${{ needs.build.outputs.script-file }}"
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: dist-folder
-      - name: Show Files
-        run: ls
-      - name: Deploy on Server
-        id: deploy-page
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v2
         with:
-          artifact_name: dist-folder
-          preview: true
-          token: "${{github.token}}"
-      - name: Show Url
-        run: echo "Website Deployed on ${{steps.deploy-page.outputs.page_url}}"
+          artifact_name: dist
+  # deploy:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Output Script file name
+  #       run: echo "${{ needs.build.outputs.script-file }}"
+  #     - name: Download artifact
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: dist-folder
+  #     - name: Show Files
+  #       run: ls
+  #     - name: Deploy on Server
+  #       id: deploy-page
+  #       uses: actions/deploy-pages@v2
+  #       with:
+  #         artifact_name: dist-folder
+  #         preview: true
+  #         token: "${{github.token}}"
+  #     - name: Show Url
+  #       run: echo "Website Deployed on ${{steps.deploy-page.outputs.page_url}}"
         # run: |
         #   echo "deploying ...."
         #   echo "Deployed"
